@@ -33,22 +33,40 @@ This status endpoint will be used to implement the health check system. The moni
 ## Considered Options
 
 * [AWS CloudWatch](https://aws.amazon.com/cloudwatch/) 
-* [Prometheus] (https://prometheus.io/)
+* [Prometheus](https://prometheus.io/)
 * [Healthchecks](https://healthchecks.io/)
 
 ## Decision Outcome
 
-Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
+<!-- Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
 
-### Positive Consequences <!-- optional -->
+### Positive Consequences 
 
 * [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
 * …
 
-### Negative Consequences <!-- optional -->
+### Negative Consequences 
 
 * [e.g., compromising quality attribute, follow-up decisions required, …]
-* …
+* … -->
+
+## Decision Outcome
+
+Chosen option: [Healthchecks](https://healthchecks.io/), because it is the most cost-effective solution, aligns with our limited budget, and is easy to set up and maintain. It meets our decision drivers by prioritizing cost over the highest quality of monitoring and does not require advanced technical expertise.
+
+### Positive Consequences
+
+* Significant cost savings compared to other options, making it suitable for our non-priority project status and limited budget.
+* Easy and quick setup with minimal configuration required, allowing us to implement monitoring without deep technical knowledge.
+* Reduced maintenance overhead since it is a managed service, freeing up resources for other tasks.
+* Reliable alerts and monitoring with free and affordable pricing plans, ensuring timely notifications of any issues.
+
+### Negative Consequences
+
+* Limited flexibility and fewer advanced features compared to AWS CloudWatch and Prometheus, which may restrict future scalability.
+* Dependence on a third-party service for monitoring, which could introduce reliability risks if the service experiences downtime.
+* Less control over advanced configuration and data handling, potentially limiting customization and integration with other systems.
+
 
 ## Pros and Cons of the Options
 
@@ -73,7 +91,7 @@ Chosen option: "[option 1]", because [justification. e.g., only option, which me
 
 ### Prometheus
 
-[Prometheus] (https://prometheus.io/) is an open-source monitoring and alerting toolkit designed for reliability and scalability. It collects and stores metrics as time series data, providing a powerful query language to analyze that data. Setting up Prometheus involves installing the server, configuring a Node.js exporter for the `/isAlive` endpoint, and setting up Alertmanager for notifications.
+[Prometheus](https://prometheus.io/) is an open-source monitoring and alerting toolkit designed for reliability and scalability. It collects and stores metrics as time series data, providing a powerful query language to analyze that data. Setting up Prometheus involves installing the server, configuring a Node.js exporter for the `/isAlive` endpoint, and setting up Alertmanager for notifications.
 
 * Good, because it is open source and free to use.
 * Good, because it is highly flexible and extensible.
@@ -95,8 +113,4 @@ Chosen option: "[option 1]", because [justification. e.g., only option, which me
 
 ## Links <!-- optional -->
 
-* [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
-* … <!-- numbers of links can vary -->
-
-## Notes
-Template from [the-madr-project](https://github.com/joelparkerhenderson/architecture-decision-record/blob/main/locales/en/templates/decision-record-template-of-the-madr-project/index.md)
+* Template from [the-madr-project](https://github.com/joelparkerhenderson/architecture-decision-record/blob/main/locales/en/templates/decision-record-template-of-the-madr-project/index.md)
