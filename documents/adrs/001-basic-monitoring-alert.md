@@ -67,6 +67,23 @@ Chosen option: [Healthchecks](https://healthchecks.io/), because it is the most 
 * Dependence on a third-party service for monitoring, which could introduce reliability risks if the service experiences downtime.
 * Less control over advanced configuration and data handling, potentially limiting customization and integration with other systems.
 
+### Proposed Design
+<!-- without getting into implementation where possible -->
+
+A Docker container hosts a monitoring script that periodically checks the federator node's /isAlive endpoint to ensure availability. This script pings to Healthchecks Check Point. Healthchecks, in turn, triggers notifications via Telegram if it detects that the federator node is unavailable.
+
+![Design Diagram](diagrams/001-monitoring-01.png)
+
+Outline:
+
+* _Infrastructure as Code (IaC)_: Use [Healthchecks API](https://healthchecks.io/docs/api/) to programmatically set up and manage the health check, specifying the check interval, and configuring alert rules.
+
+* _Docker Containerization_: The health check script and its corresponding cron job will be containerized using Docker.
+
+* _Docker Compose Integration_: Integrate monitoring container with the existing docker-compose.yml file, ensuring it runs alongside the federator node service. 
+
+* _Telegram Integration_: Alerts for health check failures will be configured to be sent via [Healthchecks.io Telegram Integration](https://healthchecks.io/integrations/telegram/).
+
 
 ## Pros and Cons of the Options
 
