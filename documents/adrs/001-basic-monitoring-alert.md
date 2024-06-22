@@ -32,10 +32,9 @@ This status endpoint will be used to implement the health check system. The moni
 
 ## Considered Options
 
-* [option 1]
-* [option 2]
-* [option 3]
-* … <!-- numbers of options can vary -->
+* [AWS CloudWatch](https://aws.amazon.com/cloudwatch/) 
+* [Prometheus] (https://prometheus.io/)
+* [Healthchecks](https://healthchecks.io/)
 
 ## Decision Outcome
 
@@ -51,34 +50,48 @@ Chosen option: "[option 1]", because [justification. e.g., only option, which me
 * [e.g., compromising quality attribute, follow-up decisions required, …]
 * …
 
-## Pros and Cons of the Options <!-- optional -->
+## Pros and Cons of the Options
 
-### [option 1]
+<!-- ### [option 1]
 
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-### [option 2]
-
-[example | description | pointer to more information | …] <!-- optional -->
+[example | description | pointer to more information | …]
 
 * Good, because [argument a]
 * Good, because [argument b]
 * Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
+-->
 
-### [option 3]
+### AWS CloudWatch
 
-[example | description | pointer to more information | …] <!-- optional -->
+[AWS CloudWatch](https://aws.amazon.com/cloudwatch/) is a monitoring and management service from AWS that provides insights to monitor applications and respond to performance changes. It is a pay-as-you-go service. Configuration requires setting up CloudWatch to monitor the `/isAlive` endpoint, creating Lambda functions for health checks, and configuring SNS for alerts.
 
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
+* Good, because it provides seamless integration with other AWS services.
+* Good, because it offers robust alerting and monitoring capabilities.
+* Bad, because it can be costly depending on usage.
+* Bad, because it requires familiarity with AWS, which our team currently lacks.
+* Bad, because the initial setup can be complex due to the involvement of multiple AWS services (CloudWatch, Lambda, SNS).
+
+### Prometheus
+
+[Prometheus] (https://prometheus.io/) is an open-source monitoring and alerting toolkit designed for reliability and scalability. It collects and stores metrics as time series data, providing a powerful query language to analyze that data. Setting up Prometheus involves installing the server, configuring a Node.js exporter for the `/isAlive` endpoint, and setting up Alertmanager for notifications.
+
+* Good, because it is open source and free to use.
+* Good, because it is highly flexible and extensible.
+* Good, because it has a strong community and extensive documentation.
+* Bad, because it requires continuous maintenance and management of infrastructure.
+* Bad, because it has a steep learning curve for those unfamiliar with monitoring tools.
+* Bad, because it may require additional resources for setup and ongoing administration.
+
+### Healthchecks
+
+[Healthchecks](https://healthchecks.io/) is a service for monitoring the availability of HTTP endpoints. It works by sending periodic HTTP requests to a specified URL and alerts you if the endpoint does not respond within a set time frame. The setup involves configuring a check for the `/isAlive` endpoint, and setting up a cron job to call the Healthchecks ping URL from a script.
+
+* Good, because it is very easy to set up and use.
+* Good, because it offers a cost-effective solution with free and reasonably priced plans.
+* Good, because it does not require own infrastructure or extensive technical expertise.
+* Bad, because it is less flexible and has fewer features compared to AWS CloudWatch and Prometheus.
+* Bad, because it depends on a third-party service for monitoring.
+* Bad, because it offers less control over advanced configuration and data handling.
 
 ## Links <!-- optional -->
 
