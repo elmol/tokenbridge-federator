@@ -1,7 +1,7 @@
 # Basic Federator Node Availability Monitoring and Alert System <!-- [short title of solved problem and solution] -->
 
-* Status: draft  <!--[draft | proposed | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)] -->
-* Date: YYYY-MM-DD <!-- [YYYY-MM-DD when the decision was last updated] -->
+* Status: accepted  <!--[draft | proposed | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)] -->
+* Date: 2024-06-28 <!-- [YYYY-MM-DD when the decision was last updated] -->
 
 Technical Story: Implementing a basic system for monitoring the availability of the Federator node and setting up alerts to notify in case of downtime.  <!-- [description | ticket/issue URL] -->
 
