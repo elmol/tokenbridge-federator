@@ -54,6 +54,8 @@ This status endpoint will be used to implement the health check system. The moni
 
 Chosen option: [Healthchecks](https://healthchecks.io/), because it is the most cost-effective solution, aligns with our limited budget, and is easy to set up and maintain. It meets our decision drivers by prioritizing cost over the highest quality of monitoring and does not require advanced technical expertise.
 
+The ongoing costs for cloud/third-party  services are minimal. Healthchecks.io offers a hobbyist plan at $0 per month, which fits our needs. AWS CloudWatch, although affordable, may require custom metrics, potentially costing less than $4 per month. Prometheus incurs no direct costs if deployed on the current EC2 instance. The major expense is development: Healthchecks.io is the most cost-effective due to minimal human resource requirements and existing expertise. AWS follows, with higher costs due to inexperience, and Prometheus requires the highest development effort due to its open-source nature and need for adaptation.
+
 ### Positive Consequences
 
 * Significant cost savings compared to other options, making it suitable for our non-priority project status and limited budget.
