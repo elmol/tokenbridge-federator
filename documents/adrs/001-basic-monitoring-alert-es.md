@@ -1,15 +1,8 @@
 # Monitoreo de Disponibilidad y Sistema de Alertas Básico para el Nodo Federador
-**Estado:** aceptado  
-**Fecha:** 28-06-2024  
-**Historia Técnica:** 
-
-
-# [título breve del problema resuelto y solución]
-
 * Estado: aceptado <!-- [propuesto | rechazado | aceptado | en desuso | … | reemplazado por [ADR-0005](0005-example.md)] -->
 * Fecha: 2024-06-28  <!-- [AAAA-MM-DD cuando se actualizó la decisión por última vez]  -->
 
-Historia técnica: Implementación de un sistema básico que permita monitorear la disponibilidad del nodo y  notificar en caso inactividad.  <!--[descripción | URL del ticket/emisión] < opcional -->
+Historia técnica: Implementación de un sistema básico que permita monitorear la disponibilidad del nodo y  notificar en caso de inactividad.  <!--[descripción | URL del ticket/emisión] < opcional -->
 
 ## Contexto y planteamiento del problema
 
@@ -50,7 +43,7 @@ Este endpoint de estado se utilizará para implementar el sistema de healthcheck
 
 Opción elegida: [Healthchecks](https://healthchecks.io/), porque es la solución más barata y efectiva, se alinea con nuestro presupuesto limitado y es fácil de configurar y mantener. Cumple con nuestros impulsores de decisión al priorizar el costo sobre la calidad de monitoreo y no requiere experiencia técnica avanzada.
 
-Los costos continuos para servicios en la nube/terceros son mínimos. [Healthchecks](https://healthchecks.io/), ofrece un plan para hobbiest a $0 por mes, que se ajusta a nuestras necesidades. AWS CloudWatch, puede requerir métricas personalizadas, con un costo potencial menor de USD 4 por mes. Prometheus no incurre en costos directos si se implementa en la instancia actual de EC2. El gasto principal es el desarrollo: Healthchecks.io es la opción más economica debido a los mínimos requisitos de recursos humanos y la experiencia existente. AWS sigue, con costos más altos debido a la inexperiencia, y Prometheus requiere el mayor esfuerzo de desarrollo debido a su naturaleza de código abierto y necesidad de adaptación.
+Los costos continuos para servicios en la nube/terceros son mínimos. [Healthchecks](https://healthchecks.io/), ofrece un plan para hobbyist a $0 por mes, que se ajusta a nuestras necesidades. AWS CloudWatch, puede requerir métricas personalizadas, con un costo potencial menor de USD 4 por mes. Prometheus no incurre en costos directos si se implementa en la instancia actual de EC2. El gasto principal es el desarrollo: Healthchecks.io es la opción más económica debido a los mínimos requisitos de recursos humanos y la experiencia existente. AWS sigue, con costos más altos debido a la inexperiencia, y Prometheus requiere el mayor esfuerzo de desarrollo debido a su naturaleza de código abierto y necesidad de adaptación.
 
 
 <!-- Opción elegida: "[opción 1]", porque [justificación. por ejemplo, única opción que cumple con k.o. criterio de decisión conductor | que resuelve fuerza fuerza | … | sale mejor (ver más abajo)]. -->
@@ -58,8 +51,8 @@ Los costos continuos para servicios en la nube/terceros son mínimos. [Healthche
 ### Consecuencias positivas <!-- opcional -->
 
 <!-- * [por ejemplo, mejora de la satisfacción de los atributos de calidad, decisiones de seguimiento requeridas,…] -->
-* Opción mas economica, lo que lo hace adecuado para nuestro estado de proyecto no prioritario y presupuesto limitado.
-* Configuración minima, lo que nos permite implementar monitoreo sin profundos conocimientos técnicos.
+* Opción más económica, lo que lo hace adecuado para nuestro estado de proyecto no prioritario y presupuesto limitado.
+* Configuración mínima, lo que nos permite implementar monitoreo sin profundos conocimientos técnicos.
 * Reducción de la carga de mantenimiento al ser un servicio gestionado.
 * Alertas y monitoreo confiables con planes de precios gratuitos y asequibles, asegurando notificaciones oportunas de incidentes.
 
@@ -67,7 +60,7 @@ Los costos continuos para servicios en la nube/terceros son mínimos. [Healthche
 ### Consecuencias negativas <!-- opcional -->
 
 * Flexibilidad limitada y menos características avanzadas en comparación con AWS CloudWatch y Prometheus, lo cual podría restringir la escalabilidad futura.
-* Dependencia de un servicio de terceros para el monitoreo, lo que podría introducir riesgos de confiablidad si el servicio experimenta tiempo de inactividad.
+* Dependencia de un servicio de terceros para el monitoreo, lo que podría introducir riesgos de confiabilidad si el servicio experimenta tiempo de inactividad.
 * Menor control sobre la configuración avanzada y el manejo de datos, lo que podría limitar la personalización e integración con otros sistemas.
 
 
@@ -76,7 +69,7 @@ Los costos continuos para servicios en la nube/terceros son mínimos. [Healthche
 ### Diseño Propuesto
 <!-- sin entrar en la implementación siempre que sea posible -->
 
-Un contenedor Docker aloja un script de monitoreo que verifica periódicamente el endpoint /isAlive del nodo. Este script envía pings al Check Point de Healthchecks si el servicio esta disponible. A su vez, Healthchecks notifica a través de Telegram si detecta que el nodo no está disponible.
+Un contenedor Docker aloja un script de monitoreo que verifica periódicamente el endpoint /isAlive del nodo. Este script envía pings al Check Point de Healthchecks si el servicio está disponible. A su vez, Healthchecks notifica a través de Telegram si detecta que el nodo no está disponible.
 
 ![Diagrama de Diseño](diagrams/001-monitoring-01.png)
 
@@ -88,7 +81,7 @@ Detalles:
 
 * _Integración con Docker Compose_: Integrar el contenedor de monitoreo con el archivo docker-compose.yml existente para asegurar que se ejecute junto con el servicio del nodo.
 
-* _Integración con Telegram_: Configurar alertas para que notifique los incidentes través de la [integración de Telegram de Healthchecks.io](https://healthchecks.io/integrations/telegram/).
+* _Integración con Telegram_: Configurar alertas para que notifique los incidentes a través de la [integración de Telegram de Healthchecks.io](https://healthchecks.io/integrations/telegram/).
 
 ## Pros y contras de las opciones <!-- opcional -->
 
@@ -112,7 +105,7 @@ Detalles:
 
 ### Prometheus
 
-[Prometheus](https://prometheus.io/) es una herramienta de monitoreo y alerta de código abierto diseñada para ser confiable y escalabe. Recopila y almacena métricas como datos de series temporales, proporcionando un potente lenguaje de consulta para analizar esos datos. Configurar Prometheus implica instalar el servidor, configurar un exporter en Node.js para el endpoint `/isAlive` y configurar Alertmanager para las notificaciones.
+[Prometheus](https://prometheus.io/) es una herramienta de monitoreo y alerta de código abierto diseñada para ser confiable y escalable. Recopila y almacena métricas como datos de series temporales, proporcionando un potente lenguaje de consulta para analizar esos datos. Configurar Prometheus implica instalar el servidor, configurar un exporter en Node.js para el endpoint `/isAlive` y configurar Alertmanager para las notificaciones.
 
 * Bueno, porque es de código abierto y gratuito de usar.
 * Bueno, porque es altamente flexible y extensible.
@@ -121,11 +114,9 @@ Detalles:
 * Malo, porque tiene una curva de aprendizaje pronunciada para aquellos no familiarizados con herramientas de monitoreo.
 * Malo, porque puede requerir recursos adicionales para la configuración y administración.
 
-### Pros and Cons of the Options
-
 ### Healthchecks
 
-[Healthchecks](https://healthchecks.io/) es un servicio para monitorear la disponibilidad de endpoints HTTP. Funciona enviando periodicamente solicitudes HTTP a una URL y alerta si el endpoint no recibe las solicitudes dentro de un periodo de tiempo establecido. La implementación implica chequear el endpoint `/isAlive` y enviar solicitudes a la URL de ping de Healthchecks desde un script, que se corre periodicamente configurando un cron job.
+[Healthchecks](https://healthchecks.io/) es un servicio para monitorear la disponibilidad de endpoints HTTP. Funciona enviando periódicamente solicitudes HTTP a una URL y alerta si el endpoint no recibe las solicitudes dentro de un periodo de tiempo establecido. La implementación implica chequear el endpoint `/isAlive` y enviar solicitudes a la URL de ping de Healthchecks desde un script, que se corre periódicamente configurando un cron job.
 
 * Bueno, porque es muy fácil de configurar y usar.
 * Bueno, porque ofrece una solución rentable con planes gratuitos y a precios razonables.
